@@ -22,7 +22,7 @@ export const getBlockByHash = (req, res) => {
   const block = blockChain.chain.find(
     (block) => block.hash === req.params.hash
   );
-  res.status(201).json({
+  res.status(200).json({
     success: true,
     data: block || `There's no block with hash ${req.params.hash}`,
   });
