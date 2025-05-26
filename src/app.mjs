@@ -20,7 +20,7 @@ app.use('/api/v1/blockchain', routes);
 app.all('*', (req, res, next) => {
   next(
     new AppError(
-      `Not Found. Got: http://localhost:${process.env.PORT}${req.originalUrl}`,
+      `Got: http://localhost:${process.env.PORT}${req.originalUrl}`,
       404
     )
   );

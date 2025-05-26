@@ -9,9 +9,9 @@ export default class BlockchainRepository {
   }
 
   async getStoredChain() {
-    const chain = JSON.parse(await this.#storage.readFromFile());
+    let chain = JSON.parse(await this.#storage.readFromFile());
     if (!chain.length) {
-      const chain = new Blockchain().chain;
+      chain = new Blockchain().chain;
       await this.#storage.writeToFile(JSON.stringify(chain));
     }
     return chain;

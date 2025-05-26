@@ -17,6 +17,8 @@ export default class Storage {
   }
 
   async writeToFile(data) {
+    const folderPath = path.dirname(this.#filePath);
+    await fs.mkdir(folderPath, { recursive: true });
     await fs.writeFile(this.#filePath, data, 'utf-8');
   }
 }
