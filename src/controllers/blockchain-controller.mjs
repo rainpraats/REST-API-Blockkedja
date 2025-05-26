@@ -1,29 +1,28 @@
-import Blockchain from '../models/Blockchain.mjs';
+import BlockchainRepository from '../repositories/blockchainRepository.mjs';
+import { catchErrorAsync } from '../utilities/tryCatchAsync.mjs';
 
-const blockChain = new Blockchain();
+export const listAllBlocks = catchErrorAsync(async (req, res) => {
+  const chain = await new BlockchainRepository().getStoredChain();
+  res.status(200).json({ success: true, data: chain });
+});
 
-export const listAllBlocks = (req, res) => {
-  res.status(200).json({ success: true, data: blockChain });
-};
-
-export const addBlock = (req, res) => {
+export const addBlock = catchErrorAsync(async (req, res) => {
   const { data } = req.body;
 
-  blockChain.addBlock({ data });
+  const chain = await new BlockchainRepository().saveNewBlock(data);
 
   res.status(201).json({
     success: true,
     message: 'Block was added',
-    data: blockChain.chain,
+    data: chain,
   });
-};
+});
 
-export const getBlockByHash = (req, res) => {
-  const block = blockChain.chain.find(
-    (block) => block.hash === req.params.hash
-  );
+export const getBlockByHash = catchErrorAsync(async (req, res) => {
+  const chain = await new BlockchainRepository().getStoredChain();
+  const block = chain.find((block) => block.hash === req.params.hash);
   res.status(200).json({
     success: true,
-    data: block || `There's no block with hash ${req.params.hash}`,
+    data: block || `There's no block with hash ${req.params.hash} on chain`,
   });
-};
+});
