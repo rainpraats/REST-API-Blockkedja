@@ -5,10 +5,12 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { setTimeout } from 'timers';
 
-it('should create the log file after an error', async () => {
+it('should create the log file after an error.', async () => {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   const logsDirPath = path.join(__dirname, '../logs');
+
+  await fs.mkdir(logsDirPath, { recursive: true });
 
   const before = await fs.readdir(logsDirPath);
 
