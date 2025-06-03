@@ -5,8 +5,7 @@ import { createHash } from '../utilities/hash.mjs';
 import { MINE_RATE } from '../utilities/config.mjs';
 
 describe('Block', () => {
-  // dummy data...
-  const timestamp = 2000; //new Date().toString();
+  const timestamp = 2000;
   const currentHash = 'current-hash';
   const lastHash = 'prev-hash';
   const data = [1, 2, 3, 4, 5];
@@ -48,8 +47,6 @@ describe('Block', () => {
   });
 
   describe('should have its properties correct initialized', () => {
-    // There might be room for improvement here.
-    // More properties might be initialized.
     it('should set a timestamp value', () => {
       expect(block.timestamp).not.toEqual(undefined);
     });
