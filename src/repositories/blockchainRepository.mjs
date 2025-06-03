@@ -10,7 +10,8 @@ export default class BlockchainRepository {
 
   async getStoredChain() {
     let chain = JSON.parse(await this.#storage.readFromFile());
-    if (!chain.length) {
+
+    if (!Blockchain.isValid(chain)) {
       chain = new Blockchain().chain;
       await this.#storage.writeToFile(JSON.stringify(chain));
     }
@@ -19,7 +20,8 @@ export default class BlockchainRepository {
 
   async saveNewBlock(data) {
     const blockchain = new Blockchain();
-    blockchain.chain = await this.getStoredChain();
+    const chain = await this.getStoredChain();
+    blockchain.replaceChain(chain);
     blockchain.addBlock({ data: data });
     await this.#storage.writeToFile(JSON.stringify(blockchain.chain));
     return blockchain.chain;
