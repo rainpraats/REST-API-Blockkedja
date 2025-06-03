@@ -1,5 +1,5 @@
 import BlockchainRepository from '../repositories/blockchainRepository.mjs';
-import { catchErrorAsync } from '../utilities/tryCatchAsync.mjs';
+import { catchErrorAsync } from '../utilities/catchErrorAsync.mjs';
 
 export const listAllBlocks = catchErrorAsync(async (req, res) => {
   const chain = await new BlockchainRepository().getStoredChain();
