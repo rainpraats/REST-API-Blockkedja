@@ -10,16 +10,14 @@ export default (err, req, res, next) => {
     statusCode: err.statusCode,
     message: err.message,
   });
-  const message = `
-    HTTP request: 
-    ${req.method} ${req.originalUrl} - ${new Date().toLocaleDateString(
+
+  const message = `HTTP request: ${req.method} ${
+    req.originalUrl
+  } - ${new Date().toLocaleDateString('sv-SE')} ${new Date().toLocaleTimeString(
     'sv-SE'
-  )} ${new Date().toLocaleTimeString('sv-SE')}
-
-    What went wrong: 
-    [Error: ${err.statusCode}], ${err.status}, ${err.message}
-
-  `;
+  )}\nWhat went wrong: [Error: ${err.statusCode}], ${err.status}, ${
+    err.message
+  }\n\n`;
 
   const storage = new Storage('logs', `errors.log`);
   storage.appendToFile(message);

@@ -5,8 +5,7 @@ export const logger = async (req, res, next) => {
     req.originalUrl
   } - ${new Date().toLocaleDateString('sv-SE')} ${new Date().toLocaleTimeString(
     'sv-SE'
-  )}
-  `;
+  )}\n`;
 
   const storage = new Storage('logs', 'logger.log');
   storage.appendToFile(message);
