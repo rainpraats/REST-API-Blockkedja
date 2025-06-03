@@ -21,4 +21,10 @@ export default class Storage {
     await fs.mkdir(folderPath, { recursive: true });
     await fs.writeFile(this.#filePath, data, 'utf-8');
   }
+
+  async appendToFile(data) {
+    const folderPath = path.dirname(this.#filePath);
+    await fs.mkdir(folderPath, { recursive: true });
+    await fs.appendFile(this.#filePath, data, 'utf-8');
+  }
 }

@@ -3,20 +3,14 @@ import Storage from '../storage.mjs';
 export default (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'Internal Server Error';
+  err.success = false;
   res.status(err.statusCode).json({
     success: err.success,
     status: err.status,
     statusCode: err.statusCode,
     message: err.message,
   });
-
-  const errorLogTitle = `${
-    req.method
-  } request at ${new Date().toLocaleDateString(
-    'sv-SE'
-  )} ${new Date().toLocaleTimeString('sv-SE')} - error ${err.statusCode}`;
-
-  const errorLogDescription = `
+  const message = `
     HTTP request: 
     ${req.method} ${req.originalUrl} - ${new Date().toLocaleDateString(
     'sv-SE'
@@ -24,8 +18,9 @@ export default (err, req, res, next) => {
 
     What went wrong: 
     [Error: ${err.statusCode}], ${err.status}, ${err.message}
+
   `;
 
-  const storage = new Storage('logs', `${errorLogTitle}.log`);
-  storage.writeToFile(errorLogDescription);
+  const storage = new Storage('logs', `errors.log`);
+  storage.appendToFile(message);
 };
